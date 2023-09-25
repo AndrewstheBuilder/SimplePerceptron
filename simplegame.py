@@ -43,7 +43,7 @@ def is_above_line(x, y):
 def draw_guess(x, y, guess):
     """Draw a dot on the display based on the perceptron's guess."""
     color = BLUE if guess == 1 else RED
-    pygame.draw.circle(DISPLAYSURF, color, (x, y), DOT_SIZE)
+    pygame.draw.circle(DISPLAYSURF, color, (x, y), 1)
 
 def draw_dot(x, y, is_above):
     """Draw a dot on the display based on its class."""
