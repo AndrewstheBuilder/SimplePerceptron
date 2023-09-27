@@ -45,8 +45,18 @@ def is_above_line(x, y):
 def draw_guess(x, y, guess):
     """Draw a dot on the display based on the perceptron's guess."""
     color = BLUE if guess == 1 else RED
-    pygame.draw.circle(DISPLAYSURF, color, (x, y), 1)
+    pygame.draw.circle(DISPLAYSURF, color, (x, y), 2)
 
+def draw_decision_boundary():
+    """ """
+    x1 = 0
+    y1 = int(-ptron.weights[2] / ptron.weights[1])
+    # print('y1',y1)
+    print('ptron.weights',ptron.weights)
+    x2 = WIDTH
+    y2 = int(-ptron.weights[0] * WIDTH / ptron.weights[1] - ptron.weights[2] / ptron.weights[1])
+
+    pygame.draw.line(DISPLAYSURF, (255, 0, 0), (x1, y1), (x2, y2))
 
 def draw_dot(x, y, is_above):
     """Draw a dot on the display based on its class."""
@@ -59,13 +69,27 @@ def draw_dot(x, y, is_above):
         pygame.draw.circle(DISPLAYSURF, BLACK, (x, y), DOT_SIZE)
 
 
+data_points = [] # list to append data points to so it does not get cleared
+
 # Draw dots
-for _ in range(2000):
+for i in range(2000):
     x, y = random.randint(0, WIDTH-1), random.randint(0, HEIGHT-1)
     inputs = [x, y, 1]
     answer = is_above_line(x, y)
     ptron.train(inputs, answer)
-    draw_dot(x, y, answer)
+    data_points.append((x,y, answer))
+
+    # if(i % 50 == 0):
+    #     # 1. Clear the screen
+    #     DISPLAYSURF.fill(WHITE)
+
+    #     # 2. Draw the updated boundary
+    #     draw_decision_boundary()
+
+    #     for x,y,answer in data_points:
+    #         draw_dot(x, y, answer)
+    # else:
+    #     draw_dot(x, y, answer)
 
     guess = ptron.feedforward(inputs)
     draw_guess(x, y, guess)
@@ -78,7 +102,9 @@ for _ in range(2000):
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-
+for x,y,answer in data_points:
+    draw_dot(x, y, answer)
+    pygame.display.update()
 # Main game loop
 while True:
     for event in pygame.event.get():
