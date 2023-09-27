@@ -51,18 +51,6 @@ def draw_guess(x, y, guess):
     color = RED if guess == 1 else BLUE
     pygame.draw.circle(DISPLAYSURF, color, (x, y), 2)
 
-def draw_decision_boundary():
-    """Draw decision boundary based on assumption when Z=0 that is the decision boundary.
-    Note: Z = W1*x + W2*y + W3*1 -> y = -W1*x/W2 - W3/W2"""
-    x1 = 0
-    y1 = int(-ptron.weights[2] / ptron.weights[1])
-    # print('y1',y1)
-    print('ptron.weights',ptron.weights)
-    x2 = WIDTH
-    y2 = int(-ptron.weights[0] * WIDTH / ptron.weights[1] - ptron.weights[2] / ptron.weights[1])
-
-    pygame.draw.line(DISPLAYSURF, (255, 0, 0), (x1, y1), (x2, y2))
-
 def draw_dot(x, y, is_above):
     """Draw a dot on the display based on its class."""
     if is_above == 1:
@@ -83,18 +71,6 @@ for i in range(10000):
     answer = is_above_line(x, y)
     ptron.train(inputs, answer)
     data_points.append((x,y, answer))
-
-    # if(i % 50 == 0):
-    #     # 1. Clear the screen
-    #     DISPLAYSURF.fill(WHITE)
-
-    #     # 2. Draw the updated boundary
-    #     draw_decision_boundary()
-
-    #     for x,y,answer in data_points:
-    #         draw_dot(x, y, answer)
-    # else:
-    #     draw_dot(x, y, answer)
 
     guess = ptron.feedforward(inputs)
     draw_guess(x, y, guess)
