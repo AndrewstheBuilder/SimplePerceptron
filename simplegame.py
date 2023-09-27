@@ -5,7 +5,7 @@ import random
 from perceptron import Perceptron
 
 # Set the seed
-random.seed(12345)
+random.seed(3)
 
 pygame.init()
 
@@ -42,7 +42,7 @@ def is_above_line(x, y):
     Therefore, if the given y is less than the calculated y for the line, the point
     is considered to be "above" the line in this coordinate system.
     """
-    return 1 if y < m * x + b else 0
+    return 1 if y < m * x + b else -1
 
 
 def draw_guess(x, y, guess):
@@ -51,13 +51,14 @@ def draw_guess(x, y, guess):
     pygame.draw.circle(DISPLAYSURF, color, (x, y), 2)
 
 def draw_decision_boundary():
-    """ """
+    """Draw decision boundary based on assumption when Z=0 that is the decision boundary.
+    Note: Z = W1*x + W2*y + W3*1 -> y = -W1*x/W2 - W3/W2"""
     x1 = 0
-    y1 = int(-ptron.weights[2] / ptron.weights[1]) + 1
+    y1 = int(-ptron.weights[2] / ptron.weights[1])
     # print('y1',y1)
     print('ptron.weights',ptron.weights)
     x2 = WIDTH
-    y2 = int(-ptron.weights[0] * WIDTH / ptron.weights[1] - ptron.weights[2] / ptron.weights[1]) + 1
+    y2 = int(-ptron.weights[0] * WIDTH / ptron.weights[1] - ptron.weights[2] / ptron.weights[1])
 
     pygame.draw.line(DISPLAYSURF, (255, 0, 0), (x1, y1), (x2, y2))
 
