@@ -4,7 +4,7 @@ import random
 class Perceptron:
     def __init__(self, n):
         self.weights = [random.uniform(-1, 1) for _ in range(n)]
-        self.c = 0.01
+        self.c = 0.001
         self.stats = [] # List to store weights after each update
 
     def feedforward(self, inputs):
