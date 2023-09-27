@@ -4,6 +4,9 @@ import sys
 import random
 from perceptron import Perceptron
 
+# Set the seed
+random.seed(12345)
+
 pygame.init()
 
 # define a Perceptron
