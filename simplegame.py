@@ -3,6 +3,7 @@ from pygame.locals import *
 import sys
 import random
 from perceptron import Perceptron
+import matplotlib.pyplot as plt
 
 # Set the seed
 random.seed(3)
@@ -121,6 +122,19 @@ accuracy = correct/total
 print("Correct:"+str(correct))
 print("Total:"+str(total))
 print("Accuracy:"+str(accuracy))
+
+# Graph stats
+stats = ptron.stats
+for i in range(len(stats[0])):  # Assuming stats[0] contains the first weight set
+    weight_values = [weight_set[i] for weight_set in stats]
+    plt.plot(weight_values, label=f'Weight {i}')
+
+plt.title("Weights over time")
+plt.xlabel("Iteration")
+plt.ylabel("Weight value")
+plt.legend()
+plt.show()
+
 # Main game loop
 while True:
     for event in pygame.event.get():

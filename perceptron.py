@@ -5,6 +5,7 @@ class Perceptron:
     def __init__(self, n):
         self.weights = [random.uniform(-1, 1) for _ in range(n)]
         self.c = 0.01
+        self.stats = [] # List to store weights after each update
 
     def feedforward(self, inputs):
         total = sum(input_val * weight for input_val,
@@ -19,3 +20,4 @@ class Perceptron:
         error = desired - guess
         for i, input_val in enumerate(inputs):
             self.weights[i] += self.c * error * input_val
+        self.stats.append(self.weights.copy())
