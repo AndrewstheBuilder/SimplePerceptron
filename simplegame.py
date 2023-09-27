@@ -12,7 +12,7 @@ ptron = Perceptron(3)
 # Constants
 WIDTH, HEIGHT = 600, 600
 DOT_SIZE = 4
-DELAY = 10
+DELAY = 1
 
 # Colors
 BLACK = (0, 0, 0)
@@ -50,11 +50,11 @@ def draw_guess(x, y, guess):
 def draw_decision_boundary():
     """ """
     x1 = 0
-    y1 = int(-ptron.weights[2] / ptron.weights[1])
+    y1 = int(-ptron.weights[2] / ptron.weights[1]) + 1
     # print('y1',y1)
     print('ptron.weights',ptron.weights)
     x2 = WIDTH
-    y2 = int(-ptron.weights[0] * WIDTH / ptron.weights[1] - ptron.weights[2] / ptron.weights[1])
+    y2 = int(-ptron.weights[0] * WIDTH / ptron.weights[1] - ptron.weights[2] / ptron.weights[1]) + 1
 
     pygame.draw.line(DISPLAYSURF, (255, 0, 0), (x1, y1), (x2, y2))
 
@@ -70,9 +70,9 @@ def draw_dot(x, y, is_above):
 
 
 data_points = [] # list to append data points to so it does not get cleared
-
+guesses = {}
 # Draw dots
-for i in range(2000):
+for i in range(10000):
     x, y = random.randint(0, WIDTH-1), random.randint(0, HEIGHT-1)
     inputs = [x, y, 1]
     answer = is_above_line(x, y)
@@ -93,6 +93,7 @@ for i in range(2000):
 
     guess = ptron.feedforward(inputs)
     draw_guess(x, y, guess)
+    guesses[i] = guess
 
     pygame.display.update()
     pygame.time.delay(DELAY)
@@ -102,9 +103,20 @@ for i in range(2000):
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-for x,y,answer in data_points:
+# Draw the actual data points at the end and calculate accuracy
+accuracy = 0.0
+correct = 0
+total = len(data_points)
+for i in range(len(data_points)):
+    x,y,answer = data_points[i]
+    if(guesses[i] == answer):
+        correct += 1
     draw_dot(x, y, answer)
     pygame.display.update()
+accuracy = correct/total
+print("Correct:"+str(correct))
+print("Total:"+str(total))
+print("Accuracy:"+str(accuracy))
 # Main game loop
 while True:
     for event in pygame.event.get():
