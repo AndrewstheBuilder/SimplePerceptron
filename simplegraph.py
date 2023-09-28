@@ -30,7 +30,7 @@ def plot_decision_boundary(ax, weights):
     return ax
 
 def is_above_line(x, y):
-    return 1 if y > m * x + b else -1
+    return 1 if y < m * x + b else -1
 
 data_points = []
 guesses = {}
