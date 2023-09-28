@@ -6,6 +6,7 @@ from perceptron import Perceptron
 import matplotlib.pyplot as plt
 
 # Set the seed
+# random.seed(1)
 # random.seed(123456)
 
 pygame.init()
@@ -71,15 +72,15 @@ for i in range(num_iterations):
     x, y = random.randint(0, WIDTH-1), random.randint(0, HEIGHT-1)
     inputs = [x, y, 1]
     answer = is_above_line(x, y)
-    ptron.train(inputs, answer)
-    data_points.append((x,y, answer))
+    ptron.train(inputs, answer, i)
+    data_points.append((x,y,answer))
 
     guess = ptron.feedforward(inputs)
     draw_guess(x, y, guess)
     guesses[i] = guess
 
     pygame.display.update()
-    pygame.time.delay(DELAY)
+    # pygame.time.delay(DELAY)
 
     # Allow closing the window during drawing
     for event in pygame.event.get():
