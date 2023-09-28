@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # Set the seed
 # random.seed(1)
-random.seed(123456)
+# random.seed(123456)
 
 # Constants
 WIDTH, HEIGHT = 600, 600
@@ -61,26 +61,10 @@ for i in range(num_iterations):
         below_y.append(y)
 
 # Plot two graphs and print out stats
+
+# Graph weights over time
 plt.ioff()
-fig, ax = plt.subplots()
-ax.scatter(above_x, above_y, color='white', edgecolor='black', s=16)
-ax.scatter(below_x, below_y, color='black', s=16)
-plot_decision_boundary(ax, ptron.weights)
-ax.set_xlim(0, WIDTH)
-ax.set_ylim(0, HEIGHT)
 
-accuracy = 0.0
-correct = sum([1 for key in guesses if guesses[key] == data_points[key][2]])
-accuracy = correct / num_iterations
-
-print("Correct:", correct)
-print("Total:", num_iterations)
-print("Accuracy:", accuracy * 100, "%")
-print('ptron.stats[num_iterations-1]: ', ptron.stats[num_iterations - 1])
-print('m: ', m)
-print('b: ', b)
-
-# Graph stats
 stats = ptron.stats
 plt.figure()
 for i in range(len(stats[0])-1):
@@ -91,4 +75,25 @@ plt.title("Weights over time")
 plt.xlabel("Iteration")
 plt.ylabel("Weight value")
 plt.legend()
+
+fig1, ax = plt.subplots()
+ax.scatter(above_x, above_y, color='white', edgecolor='black', s=16)
+ax.scatter(below_x, below_y, color='black', s=16)
+plot_decision_boundary(ax, ptron.weights)
+ax.set_xlim(0, WIDTH)
+ax.set_ylim(0, HEIGHT)
+fig1.canvas.manager.window.setGeometry(100, 100, 600, 600)  # (x, y, width, height)
+
+accuracy = 0.0
+correct = sum([1 for key in guesses if guesses[key] == data_points[key][2]])
+accuracy = correct / num_iterations
+
+# Print stats
+print("Correct:", correct)
+print("Total:", num_iterations)
+print("Accuracy:", accuracy * 100, "%")
+print('ptron.stats[num_iterations-1]: ', ptron.stats[num_iterations - 1])
+print('m: ', m)
+print('b: ', b)
+
 plt.show()
