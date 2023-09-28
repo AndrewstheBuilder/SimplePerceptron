@@ -6,7 +6,7 @@ from perceptron import Perceptron
 import matplotlib.pyplot as plt
 
 # Set the seed
-# random.seed(1)
+random.seed(1)
 # random.seed(123456)
 
 pygame.init()
