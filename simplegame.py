@@ -6,12 +6,9 @@ from perceptron import Perceptron
 import matplotlib.pyplot as plt
 
 # Set the seed
-random.seed(3)
+# random.seed(123456)
 
 pygame.init()
-
-# define a Perceptron
-ptron = Perceptron(3)
 
 # Constants
 WIDTH, HEIGHT = 600, 600
@@ -32,6 +29,9 @@ pygame.display.set_caption("Simple Game")
 # Randomly generate line's slope and intercept
 m = random.uniform(-1, 1)
 b = random.uniform(HEIGHT//4, HEIGHT//2)
+
+# define a Perceptron
+ptron = Perceptron(3, HEIGHT)
 
 
 def is_above_line(x, y):
@@ -64,8 +64,10 @@ def draw_dot(x, y, is_above):
 
 data_points = [] # list to append data points to so it does not get cleared
 guesses = {}
+num_iterations = 10000
+
 # Draw dots
-for i in range(10000):
+for i in range(num_iterations):
     x, y = random.randint(0, WIDTH-1), random.randint(0, HEIGHT-1)
     inputs = [x, y, 1]
     answer = is_above_line(x, y)
@@ -97,7 +99,10 @@ for i in range(len(data_points)):
 accuracy = correct/total
 print("Correct:"+str(correct))
 print("Total:"+str(total))
-print("Accuracy:"+str(accuracy))
+print("Accuracy:"+str(accuracy*100) + " %")
+print('ptron.stats[num_iterations-1]: ',ptron.stats[num_iterations-1])
+print('m: ', m)
+print('b: ', b)
 
 # Graph stats
 stats = ptron.stats

@@ -2,8 +2,9 @@ import random
 
 
 class Perceptron:
-    def __init__(self, n):
-        self.weights = [random.uniform(-1, 1) for _ in range(n)]
+    def __init__(self, n, HEIGHT):
+        self.weights = [random.uniform(-1, 1) for i in range(n-1)]
+        self.weights.append(random.uniform(HEIGHT//4, HEIGHT//2)) # bias term
         self.c = 0.001
         self.stats = [] # List to store weights after each update
 
