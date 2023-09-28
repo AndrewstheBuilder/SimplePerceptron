@@ -6,6 +6,7 @@ from perceptron import Perceptron
 import matplotlib.pyplot as plt
 
 # Set the seed
+random.seed(1)
 # random.seed(123456)
 
 pygame.init()
@@ -51,6 +52,7 @@ def draw_guess(x, y, guess):
     color = RED if guess == 1 else BLUE
     pygame.draw.circle(DISPLAYSURF, color, (x, y), 2)
 
+
 def draw_dot(x, y, is_above):
     """Draw a dot on the display based on its class."""
     if is_above == 1:
@@ -62,7 +64,7 @@ def draw_dot(x, y, is_above):
         pygame.draw.circle(DISPLAYSURF, BLACK, (x, y), DOT_SIZE)
 
 
-data_points = [] # list to append data points to so it does not get cleared
+data_points = []  # list to append data points to so it does not get cleared
 guesses = {}
 num_iterations = 10000
 
@@ -71,15 +73,15 @@ for i in range(num_iterations):
     x, y = random.randint(0, WIDTH-1), random.randint(0, HEIGHT-1)
     inputs = [x, y, 1]
     answer = is_above_line(x, y)
-    ptron.train(inputs, answer)
-    data_points.append((x,y, answer))
+    ptron.train(inputs, answer, i)
+    data_points.append((x, y, answer))
 
     guess = ptron.feedforward(inputs)
     draw_guess(x, y, guess)
     guesses[i] = guess
 
     pygame.display.update()
-    pygame.time.delay(DELAY)
+    # pygame.time.delay(DELAY)
 
     # Allow closing the window during drawing
     for event in pygame.event.get():
@@ -91,7 +93,7 @@ accuracy = 0.0
 correct = 0
 total = len(data_points)
 for i in range(len(data_points)):
-    x,y,answer = data_points[i]
+    x, y, answer = data_points[i]
     if(guesses[i] == answer):
         correct += 1
     draw_dot(x, y, answer)
@@ -100,7 +102,7 @@ accuracy = correct/total
 print("Correct:"+str(correct))
 print("Total:"+str(total))
 print("Accuracy:"+str(accuracy*100) + " %")
-print('ptron.stats[num_iterations-1]: ',ptron.stats[num_iterations-1])
+print('ptron.stats[num_iterations-1]: ', ptron.stats[num_iterations-1])
 print('m: ', m)
 print('b: ', b)
 
